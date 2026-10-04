@@ -269,7 +269,7 @@ const Header = () => {
           <div
             ref={sidebarRef}
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-0 right-0 h-screen w-[40%] sm:w-[70%] bg-black text-white overflow-y-auto"
+            className="absolute top-0 right-0 h-screen w-[60%] sm:w-[70%] bg-black text-white overflow-y-auto"
           >
 
             {/* SIDEBAR HEADER */}
