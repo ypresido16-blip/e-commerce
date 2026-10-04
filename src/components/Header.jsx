@@ -69,15 +69,15 @@ const Header = () => {
 
       tl.to(overlayRef.current, {
         opacity: 1,
-        duration: 0.3,
-        ease: "power2.out"
+        duration: 0.1,
+        ease: "power2.in"
       })
 
       tl.to(
         sidebarRef.current,
         {
           x: "0%",
-          duration: 0.6,
+          duration: 0.8,
           ease: "power3.out"
         },
         "-=0.2"
@@ -88,8 +88,8 @@ const Header = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 0.5,
-          stagger: 0.08,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power2.out"
         },
         "-=0.3"
@@ -269,7 +269,7 @@ const Header = () => {
           <div
             ref={sidebarRef}
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-0 right-0 h-screen w-[85%] sm:w-[70%] bg-black text-white overflow-y-auto"
+            className="absolute top-0 right-0 h-screen w-[40%] sm:w-[70%] bg-black text-white overflow-y-auto"
           >
 
             {/* SIDEBAR HEADER */}
@@ -327,10 +327,6 @@ const Header = () => {
                   >
 
                     <span className="flex items-center gap-3">
-
-                      <span className="text-amber-600">
-                        │
-                      </span>
 
                       <span className="tracking-widest text-sm">
                         {category.name}
