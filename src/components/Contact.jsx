@@ -56,7 +56,7 @@ useEffect(() => {
         </p>
 
         <a
-          href="https://wa.me/2348100462703"
+          href="https://wa.me/2348066131958"
           target="_blank"
           rel="noopener noreferrer"
           className="contact-animate flex items-center gap-3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-8 py-4 rounded-2xl tracking-widest text-sm transition-colors cursor-pointer w-fit"
