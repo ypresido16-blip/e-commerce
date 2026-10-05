@@ -13,7 +13,7 @@ const Footer = () => {
             HOUSE OF ALTHEA
           </h2>
           <p className="text-gray-400 text-sm tracking-widest">
-            LUXURY READY-TO-WEAR
+            LUXURY READY TO WEAR
           </p>
           <p className="text-gray-500 text-sm leading-relaxed mt-2">
             Handcrafted with passion. Designed for the extraordinary.

@@ -280,7 +280,7 @@ const Header = () => {
 
                 <h2
                   className="text-amber-600 text-xl tracking-widest font-bold"
-                  style={{
+                  style={{ 
                     fontFamily: "Cormorant Garamond, serif"
                   }}
                 >
