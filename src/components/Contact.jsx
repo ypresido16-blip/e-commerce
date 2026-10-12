@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import constactusbg from "../assets/constact-us-bg.jpg"
+import goldbg from "../assets/gold-bg.jpg"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -32,7 +32,7 @@ useEffect(() => {
   return (
     <section
       ref={contactRef}
-      style={{ backgroundImage: `url(${constactusbg})` }}
+      style={{ backgroundImage: `url(${goldbg})` }}
       className="relative bg-cover bg-center text-white py-20 px-6 md:px-20"
     >
       <div className="absolute inset-0 bg-black/60"></div>

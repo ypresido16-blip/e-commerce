@@ -2,14 +2,31 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
 import newbgg from "../assets/new bgg.jpg"
 import secondbg from "../assets/second-bg.jpg"
 import thirdslidebg from "../assets/third-slide-bg.jpg"
+import { useState } from "react"
 
 const Hero = () => {
+
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const handleFirstSlide = () => {
+    
+    setCurrentSlide(0)
+  }
+
+  const nextSlide = () =>{
+      setCurrentSlide((prev) => (prev + 1) % 3)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((next)=>(next -1 + 3)% 3)
+  }
+
   return (
     <div className="bg-gray-900">
       <section className="relative w-full h-[70vh] overflow-hidden">
-
+         
      
-        <div className="flex h-full overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div style={{ transform: `translateX(-${currentSlide * 100}%)` }} className="flex h-full transition-transform duration-500 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
           {/* SLIDE 1 */}
           <div
@@ -77,21 +94,21 @@ const Hero = () => {
         </div>
 
        
-        <button className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 bg-white/10  hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
-          <ChevronLeft size={24} className="text-black" />
+        <button  onClick={()=>{prevSlide()}} className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 bg-white/10  hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
+          <ChevronLeft size={24}className="text-black" />
         </button>
 
        
-        <button className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
+        <button   onClick={()=>{nextSlide()}} className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
           <ChevronRight size={24} className="text-black" />
         </button>
 
-       
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          <span className="w-8 h-2.5 rounded-full bg-gold"></span>
-          <span className="w-8 h-2.5 rounded-full bg-white/60"></span>
-          <span className="w-8 h-2.5 rounded-full bg-white/60"></span>
-        </div>
+        {[0, 1, 2].map((index) => (
+        <span key={index} className={`w-8 h-2.5 rounded-full ${ currentSlide === index? "bg-gold" : "bg-white/60" }`}></span>
+         ))}
+       </div>
+      
 
       </section>
     </div>
