@@ -16,9 +16,10 @@ const BottomNav = () => {
             <button
                 key={index}
                 onClick={() => setActiveTab(index)}
-                className={`flex flex-col items-center justify-center text-gray-500 hover:text-gold transition-colors ${
-                    activeTab === index ? "text-gold" : ""
-                }`}
+         className={`flex flex-col items-center justify-center text-gray-500 hover:text-gold transition-colors ${
+    activeTab === index ? "text-gold" : ""
+}`}
+            
             >
                 <tab.icon size={25} />
                 <span className="text-xs">{tab.name}</span>
