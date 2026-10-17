@@ -34,8 +34,8 @@ const Hero = () => {
     }
 
   return (
-    <div className="bg-gray-900">
-      <section className="relative w-full h-[50vh] md:h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
+    <div className=" px-3 py-3 md:py-0 md:px-0">
+      <section className="relative w-full h-[35vh] rounded-3xl md:rounded-none md:h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
            onTouchEnd={handleTouchEnd}
  >
         
