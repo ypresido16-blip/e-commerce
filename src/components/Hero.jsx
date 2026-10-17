@@ -116,7 +116,7 @@ const Hero = () => {
           <ChevronRight size={24} className="text-black" />
         </button>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-2">
         {[0, 1, 2].map((index) => (
         <span key={index} className={`w-4 h-2.5 rounded-2xl ${ currentSlide === index? "bg-gold" : "bg-white/60" }`}></span>
          ))}
