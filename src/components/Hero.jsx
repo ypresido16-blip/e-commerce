@@ -26,9 +26,9 @@ const Hero = () => {
     const touchEnd = e.changedTouches[0].clientX
     const touchDiff = touchStart - touchEnd
 
-    if(touchDiff > 150){
+    if(touchDiff > 50){
       nextSlide()
-    }else if(touchDiff < -150){
+    }else if(touchDiff < -50){
       prevSlide()
     }
     }
