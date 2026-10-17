@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import  FeatureCategory from './components/FeatureCategory'
 import About from './components/About'
 import Contact from './components/Contact'
+import BottomNav from './components/BottomNav'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
       <About/>
       <Contact/>
       <Footer/>
+      <BottomNav/>
      
     </div>
   )
