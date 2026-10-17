@@ -2,16 +2,13 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
 import newbgg from "../assets/new bgg.jpg"
 import secondbg from "../assets/second-bg.jpg"
 import thirdslidebg from "../assets/third-slide-bg.jpg"
+
 import { useState } from "react"
 
 const Hero = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0)
-
-  const handleFirstSlide = () => {
-    
-    setCurrentSlide(0)
-  }
+  const [touchStart, setTouchStart] = useState(0)
 
   const nextSlide = () =>{
       setCurrentSlide((prev) => (prev + 1) % 3)
@@ -21,11 +18,27 @@ const Hero = () => {
     setCurrentSlide((next)=>(next -1 + 3)% 3)
   }
 
+  const handleTouchStart = (e) =>{
+    setTouchStart(e.touches[0].clientX)
+  }
+
+  const handleTouchEnd = (e) =>{
+    const touchEnd = e.changedTouches[0].clientX
+    const touchDiff = touchStart - touchEnd
+
+    if(touchDiff > 150){
+      nextSlide()
+    }else if(touchDiff < -150){
+      prevSlide()
+    }
+    }
+
   return (
     <div className="bg-gray-900">
-      <section className="relative w-full h-[70vh] overflow-hidden">
-         
-     
+      <section className="relative w-full h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
+           onTouchEnd={handleTouchEnd}
+ >
+        
         <div style={{ transform: `translateX(-${currentSlide * 100}%)` }} className="flex h-full transition-transform duration-500 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
           {/* SLIDE 1 */}
@@ -105,7 +118,7 @@ const Hero = () => {
 
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
         {[0, 1, 2].map((index) => (
-        <span key={index} className={`w-8 h-2.5 rounded-full ${ currentSlide === index? "bg-gold" : "bg-white/60" }`}></span>
+        <span key={index} className={`w-4 h-2.5 rounded-2xl ${ currentSlide === index? "bg-gold" : "bg-white/60" }`}></span>
          ))}
        </div>
       
