@@ -2,12 +2,12 @@ import { Heart } from "lucide-react"
 
 const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }) => {
   return (
-    <div className="border border-gray-200 rounded-lg p-4 text-center">
+    <div className="rounded-lg p-4 text-center">
       <div className="relative">
         <img 
           src={product.image} 
           alt={product.name}
-          className="w-full h-[40vh] object-cover rounded-[20px] mb-3" 
+          className="w-[80vw] md:w-[100%]  md:h-[40vh] h-[15vh] object-cover rounded-[20px] " 
         />
         <button className="absolute top-2 right-2 bg-white/80 rounded-full p-2 hover:bg-white transition-colors">
           <Heart size={18} />

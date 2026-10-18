@@ -69,12 +69,14 @@ const ProductGrid = () => {
 
   return (
    <>
-  <div className="flex justify-between items-center px-10 pt-6">
-    <h2 className="text-xl font-semibold">Clothes</h2>
-    <a href="#" className="text-sm text-amber-600 hover:underline">View All</a>
+  <div className="flex justify-center m-3  items-center px-2 pt-2">
+    <h2 className="text-2xl font-semibold "
+    style={{ fontFamily: "Cormorant Garamond, serif" }}
+    >Clothes</h2>
+     
   </div>
 
-  <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-10">
+  <section className="grid  grid-cols-2 sm:grid-cols-2 md:grid-cols-4  ">
     {products.map((product) => (
       <ProductCard
         key={product.id}

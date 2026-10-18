@@ -35,7 +35,7 @@ const Hero = () => {
 
   return (
     <div className=" px-3 py-3 md:py-0 md:px-0">
-      <section className="relative w-full h-[35vh] rounded-3xl md:rounded-none md:h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
+      <section className="relative w-full h-[25vh] rounded-3xl md:rounded-none md:h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
            onTouchEnd={handleTouchEnd}
  >
         
@@ -55,7 +55,7 @@ const Hero = () => {
               >
                 All Ready to wear <br /> Collection
               </p>
-              <button className="bg-gold flex text-white items-center gap-2 px-3 py-3 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold flex text-white items-center   gap-1 p-2 py-2  m-2    md:px-4  md:py-4 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
               
                 Shop New Arrivals   
                    <ArrowRight size={25} />
