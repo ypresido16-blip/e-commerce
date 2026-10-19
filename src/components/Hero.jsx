@@ -55,7 +55,7 @@ const Hero = () => {
               >
                 All Ready to wear <br /> Collection
               </p>
-              <button className="bg-gold flex text-white items-center   gap-1 p-2 py-2  m-2    md:px-4  md:py-4 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold  text-[9px] md:text-[30px] flex text-white items-center   gap-1 p-2 py-2  m-2    md:px-4  md:py-4 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
               
                 Shop New Arrivals   
                    <ArrowRight size={25} />
@@ -77,7 +77,7 @@ const Hero = () => {
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="bg-gold text-white px-6 py-3 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold text-white text-[9px] md:text-[30px] px-6 py-3 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
                 Shop Now
               </button>
             </div>
@@ -98,7 +98,7 @@ const Hero = () => {
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="bg-gold text-white px-6 py-3 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold text-white text-[9px] md:text-[30px] px-6 py-2 rounded-2xl hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
                 Shop Now
               </button>
             </div>
