@@ -50,7 +50,7 @@ const Hero = () => {
 
             <div className="relative flex flex-col items-start p-4 md:p-8">
               <p
-                className="font-bold text-3xl md:text-6xl mb-6 text-gold"
+                className="font-bold text-2xl md:text-6xl mb-2 m-2 text-gold"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 All Ready to wear <br /> Collection
@@ -72,7 +72,7 @@ const Hero = () => {
 
             <div className="relative flex flex-col items-start p-4 md:p-8">
               <p
-                className="font-bold text-3xl md:text-6xl mb-6 text-gold"
+                className="font-bold text-2xl md:text-6xl mb-2 m-2 text-gold"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
@@ -93,7 +93,7 @@ const Hero = () => {
 
             <div className="relative flex flex-col items-start p-4 md:p-8">
               <p
-                className="font-bold text-3xl md:text-6xl mb-6 text-gold"
+                className="font-bold text-3xl md:text-6xl  mb-2 m-2 text-gold"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
