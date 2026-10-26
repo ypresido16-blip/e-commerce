@@ -107,19 +107,19 @@ const FeatureCategory = () => {
   return (
     <div ref={sectionRef} className="overflow-hidden">
       <h1
-        className="font-bold text-3xl text-shadow-black text-center my-4"
+        className="font-bold text-1xl md:text-3xl text-shadow-black text-center my-4"
         style={{ fontFamily: "Cormorant Garamond, serif" }}
       >
         FEATURED CATEGORY
       </h1>
 
       <div
-        className="flex justify-center gap-6 md:gap-10 px-4 py-6"
+        className="flex justify-center gap-3 md:gap-10 px-4 py-6"
         style={{ perspective: "1000px" }}
       >
         {/* Clothes */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="clothes-tile w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
+          <div className="clothes-tile w-24 h-24 md:w-28 md:h-28 rounded-[20px] flex items-center justify-center shadow-lg">
             <model-viewer
               loading="lazy"
               ref={clothesRef}
@@ -142,7 +142,7 @@ const FeatureCategory = () => {
 
         {/* Shoes */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="shoe-tile w-24 h-24 md:w-28 md:h-28 flex items-center justify-center shadow-lg overflow-hidden">
+          <div className="shoe-tile w-24 h-24 md:w-28 md:h-28 flex  rounded-[20px] items-center justify-center shadow-lg overflow-hidden">
             <model-viewer
               loading="lazy"
               ref={shoeRef}
@@ -163,16 +163,10 @@ const FeatureCategory = () => {
           <span className="text-sm tracking-wide">Shoes</span>
         </div>
 
-        {/* New Arrivals */}
-        <div className="category-card flex flex-col items-center gap-2">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
-            <Sparkles size={44} className="text-white" />
-          </div>
-
-          <span className="text-sm tracking-wide">New Arrivals</span>
-        </div>
       </div>
-    </div>
+        </div>
+     
+  
   )
 }
 
