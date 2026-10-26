@@ -5,62 +5,46 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import ShoeIcon from "./ShoeIcon"
 
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 const FeatureCategory = () => {
   const sectionRef = useRef(null)
 
   useEffect(() => {
-    const from = {
-      rotationX: -90,
-      rotationY: 25,
-      z: -400,
-      y: 80,
-      opacity: 0,
-      transformOrigin: "50% 100%",
-    }
-    const to = { rotationX: 0, rotationY: 0, z: 0, y: 0, opacity: 1 }
-
-    const isMobile = window.matchMedia("(max-width: 767px)").matches
-    let observer
-
     const ctx = gsap.context(() => {
-      if (isMobile) {
-        // MOBILE: hide the cards, then flip them in once when visible
-        gsap.set(".category-card", from)
-
-        observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              gsap.to(".category-card", {
-                ...to,
-                duration: 1,
-                ease: "power3.out",
-                stagger: 0.2,
-              })
-              observer.disconnect()
-            }
-          },
-          { threshold: 0.1 }
-        )
-        observer.observe(sectionRef.current)
-      } else {
-        // DESKTOP: tied to the scroll
-        gsap.fromTo(".category-card", from, {
-          ...to,
+      gsap.fromTo(
+        ".category-card",
+        {
+          rotationX: -90,
+          rotationY: 25,
+          z: -400,
+          y: 80,
+          opacity: 0,
+          transformOrigin: "50% 100%",
+        },
+        {
+          rotationX: 0,
+          rotationY: 0,
+          z: 0,
+          y: 0,
+          opacity: 1,
           ease: "power3.out",
           stagger: 0.2,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 85%",
-            end: "top 30%",
+            start: "top 40%",
+            end: "top 1%",
             scrub: 1,
           },
-        })
-      }
+        }
+      )
     }, sectionRef)
 
+    const refresh = () => ScrollTrigger.refresh()
+    window.addEventListener("load", refresh)
+
     return () => {
-      if (observer) observer.disconnect()
+      window.removeEventListener("load", refresh)
       ctx.revert()
     }
   }, [])
