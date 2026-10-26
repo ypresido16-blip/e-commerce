@@ -1,18 +1,32 @@
 import { useRef, useEffect } from "react"
 import { Shirt, Sparkles } from "lucide-react"
+import "@google/model-viewer"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import ShoeIcon from "./ShoeIcon"
 
 gsap.registerPlugin(ScrollTrigger)
 ScrollTrigger.config({ ignoreMobileResize: true })
 
 const FeatureCategory = () => {
   const sectionRef = useRef(null)
+  const viewerRef = useRef(null)
 
   useEffect(() => {
+    const orbit = { angle: 0 }
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "top 10%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      // 1. the three tiles flip in
+      tl.fromTo(
         ".category-card",
         {
           rotationX: -90,
@@ -28,15 +42,40 @@ const FeatureCategory = () => {
           z: 0,
           y: 0,
           opacity: 1,
-          ease: "power3.out",
+          duration: 1,
           stagger: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 40%",
-            end: "top 1%",
-            scrub: 1,
-          },
+          ease: "power3.out",
         }
+      )
+
+      // 2. the shoe tile jumps up
+      tl.to(
+        ".shoe-tile",
+        { y: -40, duration: 0.6, ease: "power2.out" },
+        "+=0.1"
+      )
+
+      // 2. and the shoe spins 360 at the same time
+      tl.to(
+        orbit,
+        {
+          angle: 360,
+          duration: 1.2,
+          ease: "none",
+          onUpdate: () => {
+            if (viewerRef.current) {
+              viewerRef.current.cameraOrbit = `${orbit.angle}deg 75deg 100%`
+            }
+          },
+        },
+        "<"
+      )
+
+      // 3. the tile lands with a bounce
+      tl.to(
+        ".shoe-tile",
+        { y: 0, duration: 0.6, ease: "bounce.out" },
+        "<0.6"
       )
     }, sectionRef)
 
@@ -64,24 +103,38 @@ const FeatureCategory = () => {
       >
         {/* Clothes */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="w-20 h-20 rounded-[20px] bg-gold flex items-center justify-center shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:scale-110 active:scale-95 cursor-pointer">
-            <Shirt size={40} className="text-white" />
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
+            <Shirt size={44} className="text-white" />
           </div>
           <span className="text-sm tracking-wide">Clothes</span>
         </div>
 
-        {/* Shoes */}
+        {/* Shoes: the 3D shoe sits inside the box */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="w-20 h-20 rounded-[20px] bg-gold flex items-center justify-center shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:scale-110 active:scale-95 cursor-pointer">
-            <ShoeIcon size={40} className="text-white" />
+          <div className="shoe-tile w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg overflow-hidden">
+            <model-viewer
+              loading="lazy"
+              ref={viewerRef}
+              src="/models/shoe-small.glb"
+              alt="Shoe in 3D"
+              camera-orbit="0deg 75deg 100%"
+              environment-image="neutral"
+              exposure="1.1"
+              style={{
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+                background: "transparent",
+              }}
+            ></model-viewer>
           </div>
           <span className="text-sm tracking-wide">Shoes</span>
         </div>
 
         {/* New Arrivals */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="w-20 h-20 rounded-[20px] bg-gold flex items-center justify-center shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:scale-110 active:scale-95 cursor-pointer">
-            <Sparkles size={40} className="text-white" />
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
+            <Sparkles size={44} className="text-white" />
           </div>
           <span className="text-sm tracking-wide">New Arrivals</span>
         </div>
