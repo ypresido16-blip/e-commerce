@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react"
-import { Shirt, Sparkles } from "lucide-react"
+import { Sparkles } from "lucide-react"
 import "@google/model-viewer"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -9,7 +9,8 @@ ScrollTrigger.config({ ignoreMobileResize: true })
 
 const FeatureCategory = () => {
   const sectionRef = useRef(null)
-  const viewerRef = useRef(null)
+  const clothesRef = useRef(null)
+  const shoeRef = useRef(null)
 
   useEffect(() => {
     const orbit = { angle: 0 }
@@ -25,7 +26,7 @@ const FeatureCategory = () => {
         },
       })
 
-      // 1. the three tiles flip in
+      // 1. The three category cards flip in
       tl.fromTo(
         ".category-card",
         {
@@ -48,14 +49,18 @@ const FeatureCategory = () => {
         }
       )
 
-      // 2. the shoe tile jumps up
+      // 2. Both boxes jump up
       tl.to(
-        ".shoe-tile",
-        { y: -40, duration: 0.6, ease: "power2.out" },
+        [".clothes-tile", ".shoe-tile"],
+        {
+          y: -40,
+          duration: 0.6,
+          ease: "power2.out",
+        },
         "+=0.1"
       )
 
-      // 2. and the shoe spins 360 at the same time
+      // 3. Rotate both 3D models 360 degrees
       tl.to(
         orbit,
         {
@@ -63,23 +68,34 @@ const FeatureCategory = () => {
           duration: 1.2,
           ease: "none",
           onUpdate: () => {
-            if (viewerRef.current) {
-              viewerRef.current.cameraOrbit = `${orbit.angle}deg 75deg 100%`
+            if (clothesRef.current) {
+              clothesRef.current.cameraOrbit =
+                `${orbit.angle}deg 75deg 100%`
+            }
+
+            if (shoeRef.current) {
+              shoeRef.current.cameraOrbit =
+                `${orbit.angle}deg 75deg 100%`
             }
           },
         },
         "<"
       )
 
-      // 3. the tile lands with a bounce
+      // 4. Both boxes land with a bounce
       tl.to(
-        ".shoe-tile",
-        { y: 0, duration: 0.6, ease: "bounce.out" },
+        [".clothes-tile", ".shoe-tile"],
+        {
+          y: 0,
+          duration: 0.6,
+          ease: "bounce.out",
+        },
         "<0.6"
       )
     }, sectionRef)
 
     const refresh = () => ScrollTrigger.refresh()
+
     window.addEventListener("load", refresh)
 
     return () => {
@@ -103,18 +119,33 @@ const FeatureCategory = () => {
       >
         {/* Clothes */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
-            <Shirt size={44} className="text-white" />
+          <div className="clothes-tile w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
+            <model-viewer
+              loading="lazy"
+              ref={clothesRef}
+              src="/models/clothe-small.glb"
+              alt="Clothes in 3D"
+              camera-orbit="0deg 75deg 100%"
+              environment-image="neutral"
+              exposure="1.1"
+              style={{
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+                background: "transparent",
+              }}
+            />
           </div>
+
           <span className="text-sm tracking-wide">Clothes</span>
         </div>
 
-        {/* Shoes: the 3D shoe sits inside the box */}
+        {/* Shoes */}
         <div className="category-card flex flex-col items-center gap-2">
-          <div className="shoe-tile w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg overflow-hidden">
+          <div className="shoe-tile w-24 h-24 md:w-28 md:h-28 flex items-center justify-center shadow-lg overflow-hidden">
             <model-viewer
               loading="lazy"
-              ref={viewerRef}
+              ref={shoeRef}
               src="/models/shoe-small.glb"
               alt="Shoe in 3D"
               camera-orbit="0deg 75deg 100%"
@@ -126,8 +157,9 @@ const FeatureCategory = () => {
                 pointerEvents: "none",
                 background: "transparent",
               }}
-            ></model-viewer>
+            />
           </div>
+
           <span className="text-sm tracking-wide">Shoes</span>
         </div>
 
@@ -136,6 +168,7 @@ const FeatureCategory = () => {
           <div className="w-24 h-24 md:w-28 md:h-28 rounded-[20px] bg-gold flex items-center justify-center shadow-lg">
             <Sparkles size={44} className="text-white" />
           </div>
+
           <span className="text-sm tracking-wide">New Arrivals</span>
         </div>
       </div>
