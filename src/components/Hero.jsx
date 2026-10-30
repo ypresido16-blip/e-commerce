@@ -54,7 +54,7 @@ const Hero = () => {
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 All Ready to wear <br /> Collection
-              </p>
+         </p>
               <button className="bg-gold  text-[9px] md:text-[30px] flex text-white items-center    py-2 px-3  m-2    md:px-4  md:py-4 rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
               
                 Shop New Arrivals   
