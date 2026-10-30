@@ -17,7 +17,7 @@ const ProductGrid = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch("https://e-commerce-9jtc.onrender.com/api/products")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch products");
