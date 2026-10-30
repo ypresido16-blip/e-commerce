@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const API_URL = "https://e-commerce-9jtc.onrender.com";
+
 const AddProduct = () => {
   const [product, setProduct] = useState({
     name: "",
@@ -44,7 +46,7 @@ const AddProduct = () => {
       formData.append("image", image);
 
       // Upload image to Cloudinary
-      const response = await fetch("http://localhost:5000/api/upload", {
+      const response = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -52,29 +54,26 @@ const AddProduct = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message || "Image upload failed");
       }
 
       // Save product to MongoDB
-      const productResponse = await fetch(
-        "http://localhost:5000/api/products",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: product.name,
-            price: Number(product.price),
-            image: data.imageUrl,
-          }),
-        }
-      );
+      const productResponse = await fetch(`${API_URL}/api/products`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: product.name,
+          price: Number(product.price),
+          image: data.imageUrl,
+        }),
+      });
 
       const savedProduct = await productResponse.json();
 
       if (!productResponse.ok) {
-        throw new Error(savedProduct.message);
+        throw new Error(savedProduct.message || "Failed to save product");
       }
 
       alert("Product added successfully!");
