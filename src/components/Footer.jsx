@@ -73,10 +73,10 @@ const Footer = () => {
 
       </div>
 
- {/* Bottom bar */}
-<div className="w-full px-4 md:px-20 py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-800">
+{/* Bottom bar */}
+<div className="w-full px-4 md:px-20 pt-6 pb-24 md:py-6 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-gray-800">
 
-  <p className="w-full text-gray-500 text-[9px] md:text-xs tracking-normal md:tracking-widest text-center leading-relaxed">
+  <p className="text-gray-500 text-[10px] md:text-xs tracking-widest text-center">
     © 2026 HOUSE OF ALTHEA. ALL RIGHTS RESERVED.
   </p>
 
@@ -85,7 +85,6 @@ const Footer = () => {
   </p>
 
 </div>
-
     </footer>
   )
 }
