@@ -85,9 +85,9 @@ const ProductGrid = () => {
 
   return (
     <>
-      <div className="flex justify-center m-3 items-center px-2 pt-2">
+      <div className="  m-3 items-center px-2 pt-2">
         <h2
-          className="text-2xl font-semibold"
+          className="text-2xl  font-semibold"
           style={{ fontFamily: "Cormorant Garamond, serif" }}
         >
           Clothes

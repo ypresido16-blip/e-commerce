@@ -8,7 +8,7 @@ import FeatureCategory from './components/FeatureCategory'
 import About from './components/About'
 import Contact from './components/Contact'
 import BottomNav from './components/BottomNav'
-import AddProduct from './components/AddProduct'
+import Admin from './components/Admin'
 
 const Home = () => {
 return ( <div> <Header /> <Hero /> <FeatureCategory /> <ProductGrid /> <About /> <Contact /> <Footer /> <BottomNav /> </div>
@@ -18,7 +18,7 @@ return ( <div> <Header /> <Hero /> <FeatureCategory /> <ProductGrid /> <About />
 const App = () => {
 return ( <BrowserRouter> <Routes>
 <Route path="/" element={<Home />} />
-<Route path="/admin" element={<AddProduct />} /> </Routes> </BrowserRouter>
+<Route path="/admin" element={<Admin />} /> </Routes> </BrowserRouter>
 )
 }
 

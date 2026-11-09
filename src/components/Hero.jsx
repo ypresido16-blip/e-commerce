@@ -50,12 +50,12 @@ const Hero = () => {
 
             <div className="relative flex flex-col items-start p-4 md:p-8">
               <p
-                className="font-bold text-2xl md:text-6xl mb-2 m-2 text-gold"
+                className="font-bold text-2xl m-6 md:text-6xl mb-2  text-gold"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 All Ready to wear <br /> Collection
          </p>
-              <button className="bg-gold  text-[9px] md:text-[30px] flex text-white items-center    py-2 px-3  m-2    md:px-4  md:py-4 rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold  ml-5 text-[9px] md:text-[30px] flex text-white items-center  p-2   rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
               
                 Shop New Arrivals   
                    <ArrowRight size={25} />
@@ -72,12 +72,12 @@ const Hero = () => {
 
             <div className="relative flex flex-col items-start p-4 md:p-8">
               <p
-                className="font-bold text-2xl md:text-6xl mb-2 m-2 text-gold"
+                className="font-bold text-2xl m-6 md:text-6xl mb-2  text-gold"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="bg-gold text-white text-[9px] md:text-[30px]  py-2 px-3  rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
+              <button className="bg-gold ml-5 text-white text-[9px] md:text-[30px]  py-2 px-3  rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
                 Shop Now
               </button>
             </div>

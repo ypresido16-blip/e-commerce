@@ -35,7 +35,7 @@ const About = () => {
               "Ready To Wear"
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm text-gray-600">
-             <span className="text-amber-600">│</span>
+             <span className="text-amber-600"> │ </span>
                 {item}
               </div>
             ))}

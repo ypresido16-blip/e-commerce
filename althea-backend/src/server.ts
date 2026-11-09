@@ -269,7 +269,16 @@ app.get("/api/seed", async (_req, res) => {
   }
 });
 
-// Connect to MongoDB before starting server
+app.put("/api/products/:id", async (req, res) => {
+  const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+  if (!updatedProduct) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+
+  return res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
+});
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {

@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const API_URL = "https://e-commerce-9jtc.onrender.com";
 
-const AddProduct = () => {
+const Admin = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
     description: "",
+    category: "",
   });
 
+  const [products, setProducts] = useState([]);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // on-screen message (toast)
+  const [message, setMessage] = useState({ text: "", type: "" });
+  const timerRef = useRef(null);
+
+  // delete confirmation box
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false);
+
+  const showMessage = (text, type = "success") => {
+    clearTimeout(timerRef.current);
+    setMessage({ text, type });
+    timerRef.current = setTimeout(() => {
+      setMessage({ text: "", type: "" });
+    }, 3000);
+  };
+
+  const loadProducts = () => {
+    fetch(`${API_URL}/api/products`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch(() => showMessage("Could not load products", "error"));
+  };
+
+  useEffect(() => {
+    loadProducts();
+    return () => clearTimeout(timerRef.current);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +65,7 @@ const AddProduct = () => {
     e.preventDefault();
 
     if (!image) {
-      alert("Please select a product image");
+      showMessage("Please select a product image", "error");
       return;
     }
 
@@ -76,33 +106,120 @@ const AddProduct = () => {
         throw new Error(savedProduct.message || "Failed to save product");
       }
 
-      alert("Product added successfully!");
+      showMessage("Product added successfully");
+      loadProducts();
 
       setProduct({
         name: "",
         price: "",
         description: "",
+        category: "",
       });
 
       setImage(null);
       setPreview(null);
-
     } catch (error) {
       console.error("Error adding product:", error);
-      alert(error.message || "Failed to add product");
+      showMessage(error.message || "Failed to add product", "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteTarget) return;
+
+    try {
+      setDeleting(true);
+
+      const res = await fetch(`${API_URL}/api/products/${deleteTarget._id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to delete product");
+      }
+
+      showMessage("Product deleted successfully");
+      loadProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      showMessage(error.message || "Failed to delete product", "error");
+    } finally {
+      setDeleting(false);
+      setDeleteTarget(null);
     }
   };
 
   return (
     <div className="min-h-screen bg-[#f5f3ee] text-[#222] flex">
 
-      {/* SIDEBAR */}
-      <aside className="w-64 bg-[#111] text-white min-h-screen hidden md:flex flex-col px-6 py-8">
+      {/* MESSAGE (TOAST) */}
+      {message.text && (
+        <div
+          role="status"
+          className={`fixed top-5 right-5 z-[60] flex items-center gap-4 px-6 py-3 text-sm shadow-lg border ${
+            message.type === "success"
+              ? "bg-green-50 border-green-300 text-green-800"
+              : "bg-red-50 border-red-300 text-red-700"
+          }`}
+        >
+          <span>{message.text}</span>
+          <button
+            onClick={() => setMessage({ text: "", type: "" })}
+            className="text-lg leading-none opacity-60 hover:opacity-100"
+            aria-label="Close message"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
-        <div className="mb-16">
-          <h1 className="text-2xl font-serif tracking-widest text-[#c9a45c]">
+      {/* DELETE CONFIRMATION */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
+          <div className="bg-white w-full max-w-sm p-8 border border-gray-200">
+            <h3 className="text-xl font-serif">Delete product?</h3>
+
+            <p className="text-sm text-gray-500 mt-3">
+              You are about to delete{" "}
+              <span className="font-medium text-[#222]">
+                {deleteTarget.name}
+              </span>
+              . This cannot be undone.
+            </p>
+
+            <div className="flex justify-end gap-3 mt-8">
+              <button
+                onClick={() => setDeleteTarget(null)}
+                disabled={deleting}
+                className="border border-gray-300 px-6 py-2 text-sm hover:bg-gray-100 transition disabled:opacity-50"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={confirmDelete}
+                disabled={deleting}
+                className="bg-red-600 text-white px-6 py-2 text-sm hover:bg-red-700 transition disabled:opacity-50"
+              >
+                {deleting ? "Deleting..." : "Yes, delete"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SIDEBAR */}
+      <aside className="w-50 bg-[#111] text-white min-h-screen hidden md:flex flex-col px-6 py-8">
+
+        <div className="mb-10">
+          <h1
+            className="text-2xl font-bold tracking-widest text-[#c9a45c]"
+            style={{ fontFamily: "Cormorant Garamond, serif" }}
+          >
             HOUSE OF ALTHEA
           </h1>
           <p className="text-[10px] tracking-[4px] text-gray-400 mt-2">
@@ -137,7 +254,13 @@ const AddProduct = () => {
         <div className="mt-auto border-t border-gray-800 pt-6">
           <p className="text-xs text-gray-500">HOUSE OF ALTHEA</p>
           <p className="text-sm text-gray-400 mt-2">
-            Luxury • Elegance • Craft
+            Elegance
+          </p>
+          <p className="text-sm text-gray-400 mt-2">
+            Luxury
+          </p>
+          <p className="text-sm text-gray-400 mt-2">
+            Craftmanship <span className="text-green-700"> Timelessness</span>
           </p>
         </div>
 
@@ -151,7 +274,7 @@ const AddProduct = () => {
 
           <div>
             <p className="text-xs text-gray-400 uppercase tracking-widest">
-              Administration / Products
+              Administration
             </p>
             <h2 className="text-xl font-serif mt-1">
               Product Management
@@ -160,7 +283,7 @@ const AddProduct = () => {
 
           <a
             href="/"
-            className="text-sm border border-[#c9a45c] px-5 py-2 hover:bg-[#c9a45c] hover:text-white transition"
+            className="text-sm border border-[#c9a45c] px-5 py-2 hover:active:bg-[#47340e] hover:bg-[#c9a45c] hover:text-white transition"
           >
             Visit Store
           </a>
@@ -172,11 +295,14 @@ const AddProduct = () => {
 
           {/* WELCOME */}
           <div className="mb-10">
-            <p className="text-[#b18b43] text-xs uppercase tracking-[4px] mb-3">
+            <p className="text-[#f1a71d] font-bold text-xs uppercase tracking-[4px] mb-3">
               House of Althea
             </p>
 
-            <h1 className="text-3xl md:text-4xl font-serif">
+            <h1
+              className="text-4xl font-extrabold md:text-4xl"
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
+            >
               Add New Product
             </h1>
 
@@ -186,9 +312,9 @@ const AddProduct = () => {
           </div>
 
           {/* DASHBOARD CARDS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-10">
+          <div className="flex gap-3 sm:grid-cols-2 mb-4">
 
-            <div className="bg-white p-6 border border-gray-200">
+            <div className="bg-white p-6 rounded-3xl border border-gray-200">
               <p className="text-xs text-gray-400 uppercase tracking-widest">
                 Management
               </p>
@@ -202,7 +328,7 @@ const AddProduct = () => {
               </p>
             </div>
 
-            <div className="bg-[#171717] text-white p-6">
+            <div className="bg-[#171717] rounded-3xl text-white p-6">
               <p className="text-xs text-[#c9a45c] uppercase tracking-widest">
                 Quick Action
               </p>
@@ -348,6 +474,7 @@ const AddProduct = () => {
                       name: "",
                       price: "",
                       description: "",
+                      category: "",
                     });
                     setImage(null);
                     setPreview(null);
@@ -371,6 +498,40 @@ const AddProduct = () => {
 
           </div>
 
+          {/* ALL PRODUCTS */}
+          <div className="bg-white border border-gray-200 mt-10">
+            <div className="border-b border-gray-200 px-6 md:px-8 py-6">
+              <h2 className="text-xl font-serif">All Products</h2>
+            </div>
+
+            {products.length === 0 ? (
+              <p className="p-6 md:p-8 text-sm text-gray-400">
+                No products yet.
+              </p>
+            ) : (
+              <div className="p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {products.map((item) => (
+                  <div key={item._id} className="border border-gray-200 p-4">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-48 object-cover mb-3"
+                    />
+                    <h3 className="font-serif">{item.name}</h3>
+                    <p className="text-sm text-gray-500">₦{item.price}</p>
+
+                    <button
+                      onClick={() => setDeleteTarget(item)}
+                      className="mt-3 border border-red-300 text-red-600 px-4 py-2 text-sm hover:bg-red-50 transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
         </section>
 
       </main>
@@ -379,4 +540,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default Admin;
