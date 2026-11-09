@@ -80,10 +80,6 @@ const Footer = () => {
     © 2026 HOUSE OF ALTHEA. ALL RIGHTS RESERVED.
   </p>
 
-  <p className="text-gray-600 text-[10px] md:text-xs tracking-widest text-center">
-    LUXURY READY TO WEAR
-  </p>
-
 </div>
     </footer>
   )
