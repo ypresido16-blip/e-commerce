@@ -96,7 +96,7 @@ const ProductGrid = () => {
         if (items.length === 0) return null;
 
         return (
-          <div key={category} className="mb-14 px-4 md:px-10">
+          <div key={category} className=" px-3 md:px-8">
             <div className="flex items-center gap-4 mb-6">
               <h2
                 className="text-2xl md:text-3xl font-semibold"
