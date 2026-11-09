@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const API_URL = "https://e-commerce-9jtc.onrender.com";
+const CATEGORIES = ["Clothes", "Shoes", "Bags", "Others"];
 
 const Admin = () => {
   const [product, setProduct] = useState({
@@ -96,6 +97,7 @@ const Admin = () => {
         body: JSON.stringify({
           name: product.name,
           price: Number(product.price),
+          category: product.category,
           image: data.imageUrl,
         }),
       });
@@ -399,6 +401,27 @@ const Admin = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-2">
+                      Category
+                    </label>
+
+                    <select
+                      name="category"
+                      required
+                      value={product.category}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 px-4 py-3 text-sm outline-none focus:border-[#c9a45c] transition bg-white"
+                    >
+                      <option value="">Select a category</option>
+                      {CATEGORIES.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
                       Product Description
                     </label>
 
@@ -517,6 +540,9 @@ const Admin = () => {
                       alt={item.name}
                       className="w-full h-48 object-cover mb-3"
                     />
+                    <p className="text-[10px] text-[#c9a45c] uppercase tracking-widest mb-1">
+                      {item.category || "Others"}
+                    </p>
                     <h3 className="font-serif">{item.name}</h3>
                     <p className="text-sm text-gray-500">₦{item.price}</p>
 
