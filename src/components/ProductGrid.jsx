@@ -5,6 +5,9 @@ import backpack from "../assets/backpack.jpg";
 import jacket from "../assets/jacket.jpg";
 import sneakers from "../assets/sneakers.jpg";
 
+const API_URL = "https://e-commerce-9jtc.onrender.com";
+const CATEGORIES = ["Clothes", "Bags", "Shoes", "Others"];
+
 const ProductGrid = () => {
   const [cart, setCart] = useState([]);
   const [Products, setProducts] = useState([]);
@@ -17,7 +20,7 @@ const ProductGrid = () => {
   };
 
   useEffect(() => {
-    fetch("https://e-commerce-9jtc.onrender.com/api/products")
+    fetch(`${API_URL}/api/products`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch products");
@@ -85,30 +88,43 @@ const ProductGrid = () => {
 
   return (
     <>
-      <div className="  m-3 items-center px-2 pt-2">
-        <h2
-          className="text-2xl  font-semibold"
-          style={{ fontFamily: "Cormorant Garamond, serif" }}
-        >
-          Clothes
-        </h2>
-      </div>
+      {CATEGORIES.map((category) => {
+        const items = Products.filter(
+          (p) => (p.category || "Others") === category
+        );
 
-      <section className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4">
-        {Products.map((product) => (
-          <ProductCard
-            key={product._id}
-            product={{
-              ...product,
-              image: productImages[product.image] || product.image,
-            }}
-            onAddToCart={addToCart}
-            increaseQty={increaseQty}
-            decreaseQty={decreaseQty}
-            cartQty={getCartQty(product)}
-          />
-        ))}
-      </section>
+        if (items.length === 0) return null;
+
+        return (
+          <div key={category} className="mb-14 px-4 md:px-10">
+            <div className="flex items-center gap-4 mb-6">
+              <h2
+                className="text-2xl md:text-3xl font-semibold"
+                style={{ fontFamily: "Cormorant Garamond, serif" }}
+              >
+                {category}
+              </h2>
+              <div className="flex-1 "></div>
+            </div>
+
+            <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {items.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  product={{
+                    ...product,
+                    image: productImages[product.image] || product.image,
+                  }}
+                  onAddToCart={addToCart}
+                  increaseQty={increaseQty}
+                  decreaseQty={decreaseQty}
+                  cartQty={getCartQty(product)}
+                />
+              ))}
+            </section>
+          </div>
+        );
+      })}
     </>
   );
 };
