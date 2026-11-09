@@ -64,6 +64,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+     category: {
+      type: String, 
+      default: "Others" 
+      },
   },
   {
     timestamps: true,
@@ -79,6 +83,7 @@ const products = [
     name: "Sneakers",
     price: 59,
     image: "sneakers.jpg",
+   
   },
   {
     id: 2,
