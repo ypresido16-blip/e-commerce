@@ -2,7 +2,7 @@ import contactbg from "../assets/constact-us-bg.jpg"
 
 const About = () => {
   return (
-    <section className="bg-pink-100 text-black py-20 px-6 md:px-20">
+    <section  id="about" className="bg-pink-100 text-black py-20 px-6 md:px-20">
 
       {/* Top label */}
       <p className="text-amber-600 text-xs tracking-widest mb-2">

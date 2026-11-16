@@ -30,7 +30,7 @@ useEffect(() => {
 
 
   return (
-    <section
+    <section id="contact us"
       ref={contactRef}
       style={{ backgroundImage: `url(${goldbg})` }}
       className="relative bg-cover bg-center text-white py-20 px-6 md:px-20"

@@ -8,7 +8,7 @@ import sneakers from "../assets/sneakers.jpg";
 const API_URL = "https://e-commerce-9jtc.onrender.com";
 const CATEGORIES = ["Clothes", "Bags", "Shoes", "Others"];
 
-const ProductGrid = () => {
+const ProductGrid = ({searchTerm}) => {
   const [cart, setCart] = useState([]);
   const [Products, setProducts] = useState([]);
 
@@ -87,13 +87,22 @@ const ProductGrid = () => {
   };
 
   return (
-    <>
-      {CATEGORIES.map((category) => {
-        const items = Products.filter(
-          (p) => (p.category || "Others") === category
-        );
+   
+    <div id="shop">
 
-        if (items.length === 0) return null;
+
+
+      {CATEGORIES.map((category) => {
+ const items = Products.filter((p) => {
+  const matchesCategory = (p.category || "Others") === category;
+
+  const matchesSearch =
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.category || "Others").toLowerCase().includes(searchTerm.toLowerCase());
+
+  return matchesCategory && matchesSearch;
+});
+   if (items.length === 0) return null;
 
         return (
           <div key={category} className=" px-3 md:px-8">
@@ -125,7 +134,7 @@ const ProductGrid = () => {
           </div>
         );
       })}
-    </>
+        </div>
   );
 };
 
