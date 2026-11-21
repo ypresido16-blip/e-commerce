@@ -5,7 +5,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
     <div className="w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-3 transition-all duration-500">
 
       {/* Product Image */}
-      <div className="relative overflow-hidden rounded-[20px] h-[220px] md:h-[380px]">
+      <div className="relative overflow-hidden rounded-[20px] h-[155px] md:h-[380px]">
 
         <img
           src={product.image}
