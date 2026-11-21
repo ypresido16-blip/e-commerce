@@ -2,7 +2,7 @@ import { Heart, Plus, Minus } from "lucide-react";
 
 const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }) => {
   return (
-    <div className=" w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 bg-white/[0.12] p-3 backdrop-blur-2xl transition-all duration-500 hover:border-amber-300/40">
+    <div className=" w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 bg-white/[0.12] p-1 md:p-3 backdrop-blur-2xl transition-all duration-500 hover:border-amber-300/40">
 
       {/* Glass Reflection */}
       <div className="absolute inset-0 -z-10 pointer-events-none rounded-[26px] bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.22),transparent_55%)]" />
