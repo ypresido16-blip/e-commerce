@@ -116,7 +116,7 @@ const ProductGrid = ({searchTerm}) => {
               <div className="flex-1 "></div>
             </div>
 
-            <section className="flex overflow-x-auto flex-nowrap gap-4 pb-4 snap-x snap-mandatory md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
+            <section className="flex overflow-x-auto flex-nowrap gap-4 pb-2 snap-x snap-mandatory md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
               {items.map((product) => (
                 <ProductCard
                   key={product._id}

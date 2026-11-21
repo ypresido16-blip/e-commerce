@@ -15,7 +15,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-[155px] md:h-[300px] object-cover transition-transform duration-700  group-hover:scale-105"
+          className="w-full h-[155px] md:h-[320px] object-cover transition-transform duration-700  group-hover:scale-105"
         />
 
         {/* Wishlist */}
