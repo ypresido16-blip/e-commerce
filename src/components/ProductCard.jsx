@@ -5,7 +5,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
     <div className="w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-3 transition-all duration-500">
 
       {/* Product Image */}
-      <div className="relative overflow-hidden rounded-[20px] h-[155px] md:h-[380px]">
+      <div className="relative overflow-hidden rounded-[20px] h-[190px] md:h-[380px]">
 
         <img
           src={product.image}
@@ -32,7 +32,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
           </h3>
 
           {/* Price and Cart Button */}
-          <div className="flex items-center justify-between gap-2 mt-2">
+          <div className="mt-2 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
 
             <p className="font-semibold text-white text-sm md:text-base whitespace-nowrap">
               ₦{Number(product.price).toLocaleString()}
@@ -41,12 +41,12 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
             {cartQty === 0 ? (
               <button
                 onClick={() => onAddToCart(product)}
-                className="rounded-full bg-white px-3 md:px-5 py-2 text-black text-xs md:text-sm font-medium hover:bg-amber-300 transition-all duration-300 active:scale-95 whitespace-nowrap"
+                className="w-full md:w-auto text-center rounded-full bg-white px-3 md:px-5 py-2 text-black text-xs md:text-sm font-medium hover:bg-amber-300 transition-all duration-300 active:scale-95 whitespace-nowrap"
               >
                 Add to Cart
               </button>
             ) : (
-              <div className="flex items-center gap-3 rounded-full bg-white px-3 py-2 text-black">
+              <div className="flex w-full items-center justify-between md:w-auto md:justify-start gap-3 rounded-full bg-white px-3 py-2 text-black">
 
                 <button
                   onClick={() => decreaseQty(product)}
