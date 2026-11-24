@@ -6,15 +6,16 @@ import {
   ShoppingCart,
   Menu,
   X,
-  ChevronDown,
   ChevronRight,
+  MessageCircle,
 } from "lucide-react";
 import gsap from "gsap";
 
+const WHATSAPP_NUMBER = "234XXXXXXXXXX";
+
 const Header = ({ searchTerm, setSearchTerm }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [openCategory, setOpenCategory] = useState(null);
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const searchRef = useRef(null);
@@ -24,18 +25,10 @@ const Header = ({ searchTerm, setSearchTerm }) => {
   const sidebarContentRef = useRef(null);
 
   const categories = [
-    {
-      name: "CLOTHING",
-      subcategories: ["READY TO WEAR", "DRESSES", "TOPS", "TROUSERS", "SKIRTS"],
-    },
-    {
-      name: "FOOTWEAR",
-      subcategories: ["HANDMADE SHOES", "SANDALS", "SLIPPERS"],
-    },
-    {
-      name: "ACCESSORIES",
-      subcategories: ["BAGS", "JEWELRY", "HEADWEAR"],
-    },
+    { name: "CLOTHES", id: "clothes" },
+    { name: "BAGS", id: "bags" },
+    { name: "SHOES", id: "shoes" },
+    { name: "OTHERS", id: "others" },
   ];
 
   useEffect(() => {
@@ -103,10 +96,11 @@ const Header = ({ searchTerm, setSearchTerm }) => {
     }
   }, [isSearchOpen]);
 
-  const closeSidebar = () => {
+  const closeSidebar = (afterClose) => {
     const tl = gsap.timeline({
       onComplete: () => {
         setIsSidebarOpen(false);
+        if (typeof afterClose === "function") afterClose();
       },
     });
 
@@ -137,17 +131,25 @@ const Header = ({ searchTerm, setSearchTerm }) => {
     );
   };
 
-  const toggleCategory = (category) => {
-    setOpenCategory(openCategory === category ? null : category);
+  const goToCategory = (category) => {
+    setActiveCategory(category.name);
+
+    closeSidebar(() => {
+      let target = document.getElementById(category.id);
+
+      if (!target) {
+        target = [...document.querySelectorAll("h1, h2, h3")].find(
+          (heading) => heading.textContent.trim().toLowerCase() === category.id,
+        );
+      }
+
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   };
 
-  const handleCheck = (item) => {
-    if (checkedItems.includes(item)) {
-      setCheckedItems(checkedItems.filter((checked) => checked !== item));
-    } else {
-      setCheckedItems([...checkedItems, item]);
-    }
-  };
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    "Hello House of Althea, I would like to place an order.",
+  )}`;
 
   return (
     <div className="bg-black text-white">
@@ -172,17 +174,17 @@ const Header = ({ searchTerm, setSearchTerm }) => {
         {/* DESKTOP NAVIGATION */}
 
         <div className="hidden md:flex items-center gap-6 text-sm tracking-wide md:order-1">
-          <a href="#shop" className="hover:text-amber-600 transition-colors">
+          <a href="#shop" className="hover:text-gold transition-colors">
             Shop
           </a>
 
-          <a href="#about" className="hover:text-amber-600 transition-colors">
+          <a href="#about" className="hover:text-gold transition-colors">
             About Us
           </a>
 
           <a
             href="#contact us"
-            className="hover:text-amber-600 transition-colors"
+            className="hover:text-gold transition-colors"
           >
             Contact Us
           </a>
@@ -193,21 +195,21 @@ const Header = ({ searchTerm, setSearchTerm }) => {
         <div className="flex items-center justify-end gap-3 md:gap-4 md:order-3">
         <button
   onClick={() => setIsSearchOpen(!isSearchOpen)}
-  className="hover:text-amber-600 transition-colors"
+  className="hover:text-gold transition-colors"
 >
   {isSearchOpen ? <X size={20} /> : <Search size={20} />}
 </button>
           
 
-          <button className="hover:text-amber-600 transition-colors">
+          <button className="hover:text-gold transition-colors">
             <User size={20} />
           </button>
 
-          <button className="hover:text-amber-600 transition-colors">
+          <button className="hover:text-gold transition-colors">
             <Heart size={20} />
           </button>
 
-          <button className="hover:text-amber-600 transition-colors">
+          <button className="hover:text-gold transition-colors">
             <ShoppingCart size={20} />
           </button>
 
@@ -215,7 +217,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
 
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="md:hidden hover:text-amber-600 transition-colors"
+            className="md:hidden hover:text-gold transition-colors"
           >
             <Menu size={22} />
           </button>
@@ -250,19 +252,19 @@ const Header = ({ searchTerm, setSearchTerm }) => {
         <div
           ref={overlayRef}
           className="fixed inset-0 z-50 bg-black/70"
-          onClick={closeSidebar}
+          onClick={() => closeSidebar()}
         >
           <div
             ref={sidebarRef}
             onClick={(e) => e.stopPropagation()}
-            className="absolute top-0 right-0 h-screen w-[58%] sm:w-[70%] bg-black text-white overflow-y-auto"
+            className="absolute top-0 right-0 h-screen w-[85%] max-w-md flex flex-col bg-black text-white overflow-y-auto"
           >
             {/* SIDEBAR HEADER */}
 
             <div className="sidebar-content flex items-center justify-between px-6 py-6 border-b border-gray-800">
               <div>
                 <h2
-                  className="text-amber-600 text-xl tracking-widest font-bold"
+                  className="text-gold text-xl tracking-widest font-bold"
                   style={{
                     fontFamily: "Cormorant Garamond, serif",
                   }}
@@ -276,8 +278,8 @@ const Header = ({ searchTerm, setSearchTerm }) => {
               </div>
 
               <button
-                onClick={closeSidebar}
-                className="hover:text-amber-600 transition-colors"
+                onClick={() => closeSidebar()}
+                className="hover:text-gold transition-colors"
               >
                 <X size={26} />
               </button>
@@ -286,7 +288,7 @@ const Header = ({ searchTerm, setSearchTerm }) => {
             {/* CATEGORIES */}
 
             <div className="px-6 py-8">
-              <p className="sidebar-content text-xs text-amber-600 tracking-[0.3em] mb-6">
+              <p className="sidebar-content text-xs text-gold tracking-[0.3em] mb-6">
                 CATEGORIES
               </p>
 
@@ -296,43 +298,24 @@ const Header = ({ searchTerm, setSearchTerm }) => {
                   className="sidebar-content border-b border-gray-800"
                 >
                   <button
-                    onClick={() => toggleCategory(category.name)}
+                    onClick={() => goToCategory(category)}
                     className="w-full flex items-center justify-between py-5 text-left"
                   >
-                    <span className="flex items-center gap-3">
-                      <span className="tracking-widest text-sm">
-                        {category.name}
-                      </span>
+                    <span
+                      className={`tracking-widest text-sm transition-colors ${
+                        activeCategory === category.name ? "text-gold" : ""
+                      }`}
+                    >
+                      {category.name}
                     </span>
 
-                    {openCategory === category.name ? (
-                      <ChevronDown size={18} />
-                    ) : (
-                      <ChevronRight size={18} />
-                    )}
+                    <ChevronRight
+                      size={18}
+                      className={
+                        activeCategory === category.name ? "text-gold" : ""
+                      }
+                    />
                   </button>
-
-                  {/* SUBCATEGORIES */}
-
-                  {openCategory === category.name && (
-                    <div className="pb-5 pl-7 flex flex-col gap-4">
-                      {category.subcategories.map((item) => (
-                        <label
-                          key={item}
-                          className="flex items-center gap-3 text-sm text-gray-400 cursor-pointer hover:text-white transition-colors"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={checkedItems.includes(item)}
-                            onChange={() => handleCheck(item)}
-                            className="accent-amber-600"
-                          />
-
-                          <span>{item}</span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -340,27 +323,41 @@ const Header = ({ searchTerm, setSearchTerm }) => {
             {/* QUICK ACCESS */}
 
             <div className="sidebar-content px-6 pb-10">
-              <p className="text-xs text-amber-600 tracking-[0.3em] mb-5">
+              <p className="text-xs text-gold tracking-[0.3em] mb-5">
                 QUICK ACCESS
               </p>
 
               <div className="flex flex-col gap-5 text-sm tracking-widest">
-                <a href="#" className="hover:text-amber-600 transition-colors">
+                <a href="#" className="hover:text-gold transition-colors">
                   ABOUT US
                 </a>
 
-                <a href="#" className="hover:text-amber-600 transition-colors">
+                <a href="#" className="hover:text-gold transition-colors">
                   CONTACT US
                 </a>
 
-                <a href="#" className="hover:text-amber-600 transition-colors">
+                <a href="#" className="hover:text-gold transition-colors">
                   MY CART
                 </a>
 
-                <a href="#" className="hover:text-amber-600 transition-colors">
+                <a href="#" className="hover:text-gold transition-colors">
                   WISHLIST
                 </a>
               </div>
+            </div>
+
+            {/* WHATSAPP ORDER */}
+
+            <div className="sidebar-content mt-auto px-6 pb-8">
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-gold py-3.5 text-sm font-semibold tracking-widest text-black hover:opacity-90 active:scale-95 transition"
+              >
+                <MessageCircle size={18} />
+                ORDER ON WHATSAPP
+              </a>
             </div>
           </div>
         </div>
