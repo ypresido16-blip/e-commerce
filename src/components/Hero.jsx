@@ -3,12 +3,14 @@ import newbgg from "../assets/new bgg.jpg"
 import secondbg from "../assets/second-bg.jpg"
 import thirdslidebg from "../assets/third-slide-bg.jpg"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
+import gsap from "gsap"
 
 const Hero = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
+  const sectionRef = useRef(null)
 
   const nextSlide = () =>{
       setCurrentSlide((prev) => (prev + 1) % 3)
@@ -33,9 +35,25 @@ const Hero = () => {
     }
   }
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const slide = sectionRef.current.querySelectorAll(".slide")[currentSlide]
+      const texts = slide.querySelectorAll(".anim")
+
+      gsap.fromTo(
+        texts,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out", delay: 0.4 }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [currentSlide])
+
   return (
     <div>
       <section
+        ref={sectionRef}
         className="relative w-full h-[60vh] md:h-[80vh] overflow-hidden"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -49,19 +67,19 @@ const Hero = () => {
           {/* SLIDE 1 */}
           <div
             style={{ backgroundImage: `url(${newbgg})` }}
-            className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
+            className="slide relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
             <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
            
               <p
-                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
+                className="anim text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 All Ready to wear <br /> Collection
               </p>
-              <button className="mt-5 inline-flex items-center gap-2   pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+              <button className="anim mt-5 inline-flex items-center gap-2   pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
                 Shop new arrivals <ArrowRight size={16} />
               </button>
             </div>
@@ -70,19 +88,19 @@ const Hero = () => {
           {/* SLIDE 2 */}
           <div
             style={{ backgroundImage: `url(${secondbg})` }}
-            className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
+            className="slide relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
             <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
             
               <p
-                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
+                className="anim text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+              <button className="anim mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
                 Shop now <ArrowRight size={16} />
               </button>
             </div>
@@ -91,19 +109,19 @@ const Hero = () => {
           {/* SLIDE 3 */}
           <div
             style={{ backgroundImage: `url(${thirdslidebg})` }}
-            className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
+            className="slide relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
             <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
              
               <p
-                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
+                className="anim text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+              <button className="anim mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
                 Shop now <ArrowRight size={16} />
               </button>
             </div>
