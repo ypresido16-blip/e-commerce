@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import {useState} from 'react'
+import { useState } from 'react'
+import { BrowserRouter, Routes, Route, Outlet, useOutletContext } from 'react-router-dom'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import ProductGrid from './components/ProductGrid'
@@ -9,9 +9,9 @@ import About from './components/About'
 import Contact from './components/Contact'
 import BottomNav from './components/BottomNav'
 import Admin from './components/Admin'
+import Profile from './components/Profile'
 
-
-const Home = () => {
+const Layout = () => {
   const [searchTerm, setSearchTerm] = useState("")
 
   return (
@@ -20,21 +20,54 @@ const Home = () => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <Hero />
+      <Outlet context={{ searchTerm }} />
+      <BottomNav />
+    </div>
+  )
+}
+
+const Home = () => {
+  const { searchTerm } = useOutletContext()
+
+  return (
+    <>
+       <Hero />
       <FeatureCategory />
       <ProductGrid searchTerm={searchTerm} />
       <About />
       <Contact />
       <Footer />
-      <BottomNav />
+    </>
+  )
+}
+
+const Shop = () => {
+  const { searchTerm } = useOutletContext()
+
+  return (
+    <div className="pb-28">
+      <ProductGrid searchTerm={searchTerm} />
     </div>
   )
 }
+
+const Soon = ({ name }) => (
+  <div className="min-h-screen bg-black pt-20 pb-28 text-center text-white">
+    {name} page coming soon
+  </div>
+)
+
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/wishlist" element={<Soon name="Wishlist" />} />
+          <Route path="/cart" element={<Soon name="Cart" />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
@@ -42,5 +75,3 @@ const App = () => {
 }
 
 export default App
-
-

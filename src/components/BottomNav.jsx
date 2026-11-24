@@ -1,18 +1,32 @@
 import { Home, Store, Heart, ShoppingBag, User } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
+import { useNavigate, useLocation } from "react-router-dom"
 import gsap from "gsap"
 
 const BottomNav = () => {
-  const [activeTab, setActiveTab] = useState(0)
+  const navigate = useNavigate()
+  const location = useLocation()
   const pillRef = useRef(null)
 
   const tabList = [
-    { name: "Home", icon: Home },
-    { name: "Shop", icon: Store },
-    { name: "Wishlist", icon: Heart },
-    { name: "Cart", icon: ShoppingBag },
-    { name: "Profile", icon: User },
+    { name: "Home", icon: Home, path: "/" },
+    { name: "Shop", icon: Store, path: "/shop" },
+    { name: "Wishlist", icon: Heart, path: "/wishlist" },
+    { name: "Cart", icon: ShoppingBag, path: "/cart" },
+    { name: "Profile", icon: User, path: "/profile" },
   ]
+
+  const [activeTab, setActiveTab] = useState(0)
+
+  useEffect(() => {
+    const currentTab = tabList.findIndex(
+      (tab) => tab.path === location.pathname
+    )
+
+    if (currentTab !== -1) {
+      setActiveTab(currentTab)
+    }
+  }, [location.pathname])
 
   useEffect(() => {
     gsap.to(pillRef.current, {
@@ -36,16 +50,16 @@ const BottomNav = () => {
       {tabList.map((tab, index) => (
         <button
           key={index}
-          onClick={() => setActiveTab(index)}
+          onClick={() => {
+            setActiveTab(index)
+            navigate(tab.path)
+          }}
           className={`relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-colors duration-300 ${
             activeTab === index ? "text-gold" : "text-stone-500"
           }`}
         >
-          <tab.icon
-              size={24}
-           
-            
-          />
+          <tab.icon size={24} />
+
           <span className="text-xs mt-0.5">{tab.name}</span>
         </button>
       ))}
