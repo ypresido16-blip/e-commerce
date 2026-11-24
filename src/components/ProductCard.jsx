@@ -14,10 +14,10 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
         />
 
         {/* Bottom Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/85 via-black/50 to-transparent" />
 
         {/* Wishlist */}
-        <button className="absolute top-3 right-3 rounded-full border border-white/30 bg-white/20 p-2.5 text-white backdrop-blur-xl hover:text-amber-400 transition-colors">
+        <button className="absolute top-3 right-3 rounded-full border border-white/30 bg-black/30 p-2.5 text-white backdrop-blur-xl hover:text-amber-400 transition-colors">
           <Heart size={18} />
         </button>
 
@@ -25,7 +25,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
         <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
 
           <h3
-            className="text-base md:text-xl font-semibold truncate"
+            className="text-base md:text-xl font-semibold truncate drop-shadow-md"
             style={{ fontFamily: "Cormorant Garamond, serif" }}
           >
             {product.name}
@@ -34,7 +34,7 @@ const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }
           {/* Price and Cart Button */}
           <div className="mt-2 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
 
-            <p className="font-semibold text-white text-sm md:text-base whitespace-nowrap">
+            <p className="font-semibold text-white text-sm md:text-base whitespace-nowrap drop-shadow-md">
               ₦{Number(product.price).toLocaleString()}
             </p>
 
