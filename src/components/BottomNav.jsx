@@ -23,7 +23,7 @@ const BottomNav = () => {
   }, [activeTab])
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white border-t border-gray-200 py-2 flex items-center">
+    <nav className="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white border-t border-stone-200 py-2 flex items-center">
 
       {/* sliding pill */}
       <div
@@ -38,11 +38,12 @@ const BottomNav = () => {
           key={index}
           onClick={() => setActiveTab(index)}
           className={`relative z-10 flex-1 flex flex-col items-center justify-center py-1 transition-colors duration-300 ${
-            activeTab === index ? "text-gold" : "text-gray-500"
+            activeTab === index ? "text-gold" : "text-stone-500"
           }`}
         >
           <tab.icon
-            size={24}
+              size={24}
+           
             
           />
           <span className="text-xs mt-0.5">{tab.name}</span>

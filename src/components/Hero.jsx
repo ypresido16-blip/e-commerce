@@ -31,34 +31,38 @@ const Hero = () => {
     }else if(touchDiff < -50){
       prevSlide()
     }
-    }
+  }
 
   return (
-    <div className=" px-3 py-3 md:py-0 md:px-0">
-      <section className="relative w-full h-[25vh] rounded-3xl md:rounded-none md:h-[70vh] overflow-hidden"    onTouchStart={handleTouchStart}
-           onTouchEnd={handleTouchEnd}
- >
-        
-        <div style={{ transform: `translateX(-${currentSlide * 100}%)` }} className="flex h-full transition-transform duration-500 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div>
+      <section
+        className="relative w-full h-[60vh] md:h-[80vh] overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+
+        <div
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          className="flex h-full transition-transform duration-500 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
 
           {/* SLIDE 1 */}
           <div
             style={{ backgroundImage: `url(${newbgg})` }}
             className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-            <div className="relative flex flex-col items-start p-4 md:p-8">
+            <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
+           
               <p
-                className="font-bold text-2xl m-6 md:text-6xl mb-2  text-gold"
+                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 All Ready to wear <br /> Collection
-         </p>
-              <button className="bg-gold  ml-5 text-[9px] md:text-[30px] flex text-white items-center  p-2   rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
-              
-                Shop New Arrivals   
-                   <ArrowRight size={25} />
+              </p>
+              <button className="mt-5 inline-flex items-center gap-2   pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+                Shop new arrivals <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -68,60 +72,57 @@ const Hero = () => {
             style={{ backgroundImage: `url(${secondbg})` }}
             className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-            <div className="relative flex flex-col items-start p-4 md:p-8">
+            <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
+            
               <p
-                className="font-bold text-2xl m-6 md:text-6xl mb-2  text-gold"
+                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="bg-gold ml-5 text-white text-[9px] md:text-[30px]  py-2 px-3  rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
-                Shop Now
+              <button className="mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+                Shop now <ArrowRight size={16} />
               </button>
             </div>
           </div>
 
-
-             {/* SLIDE 3 */}
+          {/* SLIDE 3 */}
           <div
             style={{ backgroundImage: `url(${thirdslidebg})` }}
             className="relative w-full h-full shrink-0 snap-center bg-cover bg-center flex items-end"
           >
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-            <div className="relative flex flex-col items-start p-4 md:p-8">
+            <div className="relative p-6 pb-10 md:p-16 max-w-2xl">
+             
               <p
-                className="font-bold text-3xl md:text-6xl  mb-2 m-2 text-gold"
+                className="text-4xl md:text-7xl font-semibold leading-[1.05] text-white"
                 style={{ fontFamily: "Cormorant Garamond, serif" }}
               >
                 Handmade Shoes <br /> and Handmade Clothes
               </p>
-              <button className="bg-gold text-white text-[9px] md:text-[30px]  py-2 px-3   rounded-[10px] hover:bg-amber-500 active:bg-amber-700 cursor-pointer transition-colors">
-                Shop Now
+              <button className="mt-5 inline-flex items-center gap-2  pb-1 text-sm md:text-lg tracking-wide text-white hover:text-gold transition-colors">
+                Shop now <ArrowRight size={16} />
               </button>
             </div>
           </div>
 
         </div>
 
-       
-        <button  onClick={()=>{prevSlide()}} className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 bg-white/10  hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
-          <ChevronLeft size={24}className="text-black" />
+        <button onClick={()=>{prevSlide()}} className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 bg-white/10  hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
+          <ChevronLeft size={24} className="text-black" />
         </button>
 
-       
-        <button   onClick={()=>{nextSlide()}} className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
+        <button onClick={()=>{nextSlide()}} className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 bg-white/10 hover:active:bg-amber-500 hover:bg-white rounded-full p-2 transition-colors">
           <ChevronRight size={24} className="text-black" />
         </button>
 
-        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex gap-2">
-        {[0, 1, 2].map((index) => (
-        <span key={index} className={`w-4 h-2.5 rounded-2xl ${ currentSlide === index? "bg-gold" : "bg-white/60" }`}></span>
-         ))}
-       </div>
-      
+        {/* Slide counter */}
+        <div className="absolute bottom-6 right-6 md:bottom-16 md:right-16 text-sm md:text-lg tracking-widest text-white/80">
+            {String(currentSlide + 1).padStart(2, "0")} / 03
+        </div>
 
       </section>
     </div>
