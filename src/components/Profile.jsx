@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Phone, MapPin, Heart, ShoppingBag } from "lucide-react";
+import {
+  MessageCircle,
+  Phone,
+  MapPin,
+  Heart,
+  ShoppingBag,
+  ArrowUpRight,
+  ArrowRight,
+} from "lucide-react";
 import gsap from "gsap";
 import hoaLogo from "../assets/hoa aunty tawa.jpg";
 
@@ -13,7 +21,7 @@ const Profile = () => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".profile-block",
-        { y: 30, opacity: 0 },
+        { y: 25, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -32,115 +40,214 @@ const Profile = () => {
   )}`;
 
   return (
-    <div
+    <main
       ref={pageRef}
       id="profile"
-      className="min-h-screen bg-black px-6 pt-10 pb-28 text-white md:pb-16"
+      className="min-h-screen bg-[#0b0b0b] px-6 pt-10 pb-28 text-[#e8e3d9] md:px-12 md:pb-16"
     >
-      <div className="mx-auto max-w-xl">
+      <div className="mx-auto max-w-6xl">
 
         {/* Brand Header */}
-        <div className="text-center">
-          <div className="mx-auto mb-5 flex h-28 w-28 items-center justify-center overflow-hidden rounded-full borderbg-gradient-to-br from-white/10 to-transparent p-1 shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-            <img
-              src={hoaLogo}
-              alt="House of Althea Logo"
-              className="h-full w-full  object-cover"
-            />
-          </div>
+        <header className="profile-block flex flex-col items-center pb-8 text-center">
+          <img
+            src={hoaLogo}
+            alt="House of Althea Logo"
+            className="mb-5 h-20 w-20 object-contain"
+          />
 
           <h1
-            className="mt-4 text-2xl font-bold tracking-widest text-gold"
+            className="text-3xl tracking-[0.18em] text-[#c5a46d] md:text-4xl"
             style={{ fontFamily: "Cormorant Garamond, serif" }}
           >
             HOUSE OF ALTHEA
           </h1>
 
-          <p className="mt-1 text-[10px] tracking-[0.3em] text-gray-400">
+          <p className="mt-2 text-[9px] tracking-[0.45em] text-gray-500">
             LUXURY READY TO WEAR
           </p>
-        </div>
+        </header>
 
-        {/* Quick Links */}
-        <div className="profile-block mt-8 grid grid-cols-2 gap-3">
+        {/* Shopping Links */}
+        <section className="profile-block flex flex-wrap justify-center gap-8 py-6">
           <Link
             to="/wishlist"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-gray-800 py-4 text-sm tracking-widest transition-colors hover:border-gold hover:text-gold"
+            className="flex items-center gap-2 text-xs tracking-[0.15em] text-gray-400 transition hover:text-[#c5a46d]"
           >
-            <Heart size={18} />
+            <Heart size={16} />
             WISHLIST
+            <ArrowUpRight size={13} />
           </Link>
 
           <Link
             to="/cart"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-gray-800 py-4 text-sm tracking-widest transition-colors hover:border-gold hover:text-gold"
+            className="flex items-center gap-2 text-xs tracking-[0.15em] text-gray-400 transition hover:text-[#c5a46d]"
           >
-            <ShoppingBag size={18} />
+            <ShoppingBag size={16} />
             MY CART
+            <ArrowUpRight size={13} />
           </Link>
-        </div>
-
-        {/* About Us */}
-        <section id="about" className="profile-block mt-10">
-          <h2
-            className="text-xl tracking-widest text-gold"
-            style={{ fontFamily: "Cormorant Garamond, serif" }}
-          >
-            About Us
-          </h2>
-
-          <p className="mt-3 text-sm leading-relaxed text-gray-300">
-            House of Althea is a clothing and footwear brand that celebrates
-            craftsmanship. Our ready to wear pieces and handmade shoes are made
-            with care, with attention to every stitch and finish.
-          </p>
-
-          <p className="mt-3 text-sm leading-relaxed text-gray-300">
-            Every piece is made to be worn often and kept for years. Tell us
-            what you like and we will help you find it.
-          </p>
         </section>
 
-        {/* Contact Us */}
-        <section id="contact-us" className="profile-block mt-10">
-          <h2
-            className="text-xl tracking-widest text-gold"
-            style={{ fontFamily: "Cormorant Garamond, serif" }}
-          >
-            Contact Us
-          </h2>
+        {/* Editorial About Section */}
+        <section className="profile-block mt-14 grid items-center gap-10 md:grid-cols-2 md:gap-16">
+          <div className="overflow-hidden">
+            <img
+              src={hoaLogo}
+              alt="House of Althea"
+              className="h-[340px] w-full object-cover md:h-[520px]"
+            />
+          </div>
 
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href={`tel:+${WHATSAPP_NUMBER}`}
-              className="flex items-center gap-3 rounded-2xl border border-gray-800 px-4 py-4 text-sm transition-colors hover:border-gold"
+          <div className="py-4">
+            <p className="text-[10px] tracking-[0.4em] text-[#c5a46d]">
+              OUR STORY
+            </p>
+
+            <h2
+              className="mt-5 text-4xl text-[#e8e3d9] md:text-6xl"
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
             >
-              <Phone size={18} className="text-gold" />
-              <span>Call us</span>
-            </a>
+              More Than a Brand.
+              <br />
+              A Home for Handmade Stories.
+            </h2>
 
-            <div className="flex items-center gap-3 rounded-2xl border border-gray-800 px-4 py-4 text-sm">
-              <MapPin size={18} className="text-gold" />
-              <span>Orders are delivered after you confirm on WhatsApp</span>
+            <p className="mt-7 text-sm leading-8 text-gray-400">
+              House of Althea is a clothing and footwear brand that
+              celebrates craftsmanship. Our ready-to-wear pieces and
+              handmade shoes are made with care, with attention to
+              every stitch and finish.
+            </p>
+
+            <p className="mt-5 text-sm leading-8 text-gray-400">
+              Every piece is made to be worn often and kept for years.
+              We believe fashion should express individuality while
+              standing the test of time.
+            </p>
+
+            <Link
+              to="/shop"
+              className="mt-8 inline-flex items-center gap-3 pb-3 text-[10px] tracking-[0.2em] text-[#c5a46d] transition hover:text-white"
+            >
+              DISCOVER OUR COLLECTION
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+        </section>
+
+        {/* Philosophy */}
+        <section className="profile-block mt-24 py-14">
+          <div className="mb-12 text-center">
+            <p className="text-[10px] tracking-[0.4em] text-[#c5a46d]">
+              WHAT WE BELIEVE
+            </p>
+
+            <h2
+              className="mt-4 text-4xl text-[#e8e3d9] md:text-5xl"
+              style={{ fontFamily: "Cormorant Garamond, serif" }}
+            >
+              The House Philosophy
+            </h2>
+          </div>
+
+          <div className="grid gap-10 text-center md:grid-cols-3">
+            <div>
+              <span className="text-xs text-[#c5a46d]">01</span>
+              <h3
+                className="mt-4 text-2xl"
+                style={{ fontFamily: "Cormorant Garamond, serif" }}
+              >
+                Craftsmanship
+              </h3>
+              <p className="mx-auto mt-3 max-w-xs text-xs leading-7 text-gray-500">
+                Thoughtfully created pieces with attention to every detail.
+              </p>
+            </div>
+
+            <div>
+              <span className="text-xs text-[#c5a46d]">02</span>
+              <h3
+                className="mt-4 text-2xl"
+                style={{ fontFamily: "Cormorant Garamond, serif" }}
+              >
+                Quality
+              </h3>
+              <p className="mx-auto mt-3 max-w-xs text-xs leading-7 text-gray-500">
+                Designs made to be treasured and enjoyed for years.
+              </p>
+            </div>
+
+            <div>
+              <span className="text-xs text-[#c5a46d]">03</span>
+              <h3
+                className="mt-4 text-2xl"
+                style={{ fontFamily: "Cormorant Garamond, serif" }}
+              >
+                Individuality
+              </h3>
+              <p className="mx-auto mt-3 text-xs leading-7 text-gray-500">
+                Fashion that celebrates your personal expression.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* WhatsApp Order */}
-        <div className="profile-block mt-10">
+        {/* Contact */}
+        <section className="profile-block mt-10 text-center">
+          <h2
+            className="mt-4 text-4xl text-[#e8e3d9] md:text-5xl"
+            style={{ fontFamily: "Cormorant Garamond, serif" }}
+          >
+            Let's Start a Conversation.
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-7 text-gray-500">
+            Whether you have a question about our collections or need
+            help with an order, we're always happy to assist.
+          </p>
+
+          <div className="mt-9 flex flex-col items-center justify-center gap-5 sm:flex-row">
+            <a
+              href={`tel:+${WHATSAPP_NUMBER}`}
+              className="flex items-center gap-3 text-sm text-gray-400 transition hover:text-[#c5a46d]"
+            >
+              <Phone size={17} />
+              Call Us
+            </a>
+
+            <div className="flex items-center gap-3 text-sm text-gray-400">
+              <MapPin size={17} className="text-[#c5a46d]" />
+              Delivery confirmed through WhatsApp
+            </div>
+          </div>
+
           <a
             href={whatsappLink}
             target="_blank"
             rel="noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-gold py-4 text-sm font-semibold tracking-widest text-black transition hover:opacity-90 active:scale-95"
+            className="mx-auto mt-9 flex w-fit items-center justify-center gap-3 bg-[#c5a46d] px-9 py-4 text-[10px] font-semibold tracking-[0.2em] text-black transition hover:bg-[#dfc18a]"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={17} />
             ORDER ON WHATSAPP
           </a>
-        </div>
+        </section>
+
+        {/* Footer Statement */}
+        <footer className="profile-block mt-24 pt-8 text-center">
+          <h2
+            className="text-3xl tracking-wider text-[#c5a46d]"
+            style={{ fontFamily: "Cormorant Garamond, serif" }}
+          >
+            HOUSE OF ALTHEA
+          </h2>
+
+          <p className="mt-3 text-[9px] tracking-[0.4em] text-gray-600">
+            MORE THAN FASHION. A STORY IN EVERY STITCH.
+          </p>
+        </footer>
 
       </div>
-    </div>
+    </main>
   );
 };
 

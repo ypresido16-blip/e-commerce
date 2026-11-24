@@ -2,7 +2,7 @@ import { Heart, Plus, Minus } from "lucide-react";
 
 const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }) => {
   return (
-    <div className="w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-3 transition-all duration-500">
+    <div className="product-card w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-3 transition-all duration-500">
 
       {/* Product Image */}
       <div className="relative overflow-hidden rounded-[20px] h-[190px] md:h-[380px]">

@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ProductCard from "./ProductCard";
 import classicSneakers from "../assets/classicsneakers.jpg";
 import backpack from "../assets/backpack.jpg";
 import jacket from "../assets/jacket.jpg";
 import sneakers from "../assets/sneakers.jpg";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const API_URL = "https://e-commerce-9jtc.onrender.com";
 const CATEGORIES = ["Clothes", "Bags", "Shoes", "Others"];
 
-const ProductGrid = ({searchTerm}) => {
+const ProductGrid = ({ searchTerm }) => {
   const [cart, setCart] = useState([]);
   const [Products, setProducts] = useState([]);
+  const gridRef = useRef(null);
 
   const productImages = {
     "sneakers.jpg": sneakers,
@@ -30,6 +35,34 @@ const ProductGrid = ({searchTerm}) => {
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
+
+  // Product scroll animation
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray(".product-card").forEach((card) => {
+        gsap.fromTo(
+          card,
+          {
+            y: 35,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }, gridRef);
+
+    return () => ctx.revert();
+  }, [Products, searchTerm]);
 
   const getCartQty = (product) => {
     return cart.find((item) => item._id === product._id)?.qty || 0;
@@ -87,25 +120,24 @@ const ProductGrid = ({searchTerm}) => {
   };
 
   return (
-   
-    <div id="shop">
-
-
-
+    <div id="shop" ref={gridRef}>
       {CATEGORIES.map((category) => {
- const items = Products.filter((p) => {
-  const matchesCategory = (p.category || "Others") === category;
+        const items = Products.filter((p) => {
+          const matchesCategory = (p.category || "Others") === category;
 
-  const matchesSearch =
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (p.category || "Others").toLowerCase().includes(searchTerm.toLowerCase());
+          const matchesSearch =
+            p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (p.category || "Others")
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
 
-  return matchesCategory && matchesSearch;
-});
-   if (items.length === 0) return null;
+          return matchesCategory && matchesSearch;
+        });
+
+        if (items.length === 0) return null;
 
         return (
-          <div key={category} className=" px-3 md:px-8">
+          <div key={category} className="px-3 md:px-8">
             <div className="flex items-center gap-4 mb-6">
               <h2
                 className="text-2xl md:text-3xl font-semibold"
@@ -113,10 +145,11 @@ const ProductGrid = ({searchTerm}) => {
               >
                 {category}
               </h2>
-              <div className="flex-1 "></div>
+
+              <div className="flex-1"></div>
             </div>
 
-            <section className="flex overflow-x-auto flex-nowrap gap-4 pb-2 snap-x snap-mandatory md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
+            <section className="flex overflow-x-auto flex-nowrap gap-4 pb-2 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [scrollbar-width:none] md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
               {items.map((product) => (
                 <ProductCard
                   key={product._id}
@@ -134,7 +167,7 @@ const ProductGrid = ({searchTerm}) => {
           </div>
         );
       })}
-        </div>
+    </div>
   );
 };
 
