@@ -18,7 +18,7 @@ const ProductCard = ({
   return (
     <div className="product-card w-[calc(50%-8px)] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-1.5 transition-all duration-500">
 
-      <div className="relative h-[300px] md:h-[440px] overflow-hidden rounded-[22px]">
+      <div className="relative h-[250px] md:h-[440px] overflow-hidden rounded-[20px]">
 
         {/* Product Image */}
         <img
@@ -36,8 +36,8 @@ const ProductCard = ({
         </button>
 
         {/* Blurred bottom panel */}
-        <div className="absolute inset-x-0 bottom-0 h-[58%] backdrop-blur-md [mask-image:linear-gradient(to_top,black_65%,transparent)]" />
-        <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[25%] backdrop-blur-md [mask-image:linear-gradient(to_top,black_65%,transparent)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[25%] bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
 
         {/* Details */}
         <div className="absolute inset-x-0 bottom-0 p-3 md:p-4 text-white">
