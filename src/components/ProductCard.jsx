@@ -1,75 +1,114 @@
 import { Heart, Plus, Minus } from "lucide-react";
 
-const ProductCard = ({ product, onAddToCart, decreaseQty, increaseQty, cartQty }) => {
+const ProductCard = ({
+  product,
+  onAddToCart,
+  decreaseQty,
+  increaseQty,
+  cartQty,
+  onOrder,
+}) => {
+  const originalPrice = Number(product.price);
+  const totalPrice = originalPrice * cartQty;
+
+  const handleOrder = () => {
+    onOrder(product, cartQty, totalPrice);
+  };
+
   return (
-    <div className="product-card w-[48%] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-3 transition-all duration-500">
+    <div className="product-card w-[calc(50%-8px)] shrink-0 snap-start md:w-auto group relative mb-5 overflow-hidden rounded-[26px] border border-white/20 p-1 md:p-1.5 transition-all duration-500">
 
-      {/* Product Image */}
-      <div className="relative overflow-hidden rounded-[20px] h-[190px] md:h-[380px]">
+      <div className="relative h-[300px] md:h-[440px] overflow-hidden rounded-[22px]">
 
+        {/* Product Image */}
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
 
-        {/* Bottom Gradient */}
-        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/85 via-black/50 to-transparent" />
-
         {/* Wishlist */}
-        <button className="absolute top-3 right-3 rounded-full border border-white/30 bg-black/30 p-2.5 text-white backdrop-blur-xl hover:text-amber-400 transition-colors">
-          <Heart size={18} />
+        <button
+          aria-label="Add to wishlist"
+          className="absolute top-3 right-3 z-10 rounded-full bg-white/85 p-2 text-red-500 backdrop-blur-md transition-colors hover:bg-white"
+        >
+          <Heart size={16} />
         </button>
 
-        {/* Product Details */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
+        {/* Blurred bottom panel */}
+        <div className="absolute inset-x-0 bottom-0 h-[58%] backdrop-blur-md [mask-image:linear-gradient(to_top,black_65%,transparent)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+
+        {/* Details */}
+        <div className="absolute inset-x-0 bottom-0 p-3 md:p-4 text-white">
 
           <h3
-            className="text-base md:text-xl font-semibold truncate drop-shadow-md"
+            className="truncate text-base md:text-xl font-semibold tracking-wide drop-shadow-md"
             style={{ fontFamily: "Cormorant Garamond, serif" }}
           >
             {product.name}
           </h3>
 
-          {/* Price and Cart Button */}
-          <div className="mt-2 flex flex-col items-start gap-2 md:flex-row md:items-center md:justify-between">
-
-            <p className="font-semibold text-white text-sm md:text-base whitespace-nowrap drop-shadow-md">
-              ₦{Number(product.price).toLocaleString()}
+          {product.description && (
+            <p className="mt-1 line-clamp-2 text-[11px] md:text-xs leading-snug text-white/80">
+              {product.description}
             </p>
+          )}
 
+          <div className="mt-3 flex flex-col items-start gap-2 md:flex-row md:items-end md:justify-between">
+
+            {/* Price */}
+            <div className="leading-tight">
+              <p className="text-[10px] md:text-xs text-white/70">
+                {cartQty === 0 ? "Price" : "Total"}
+              </p>
+              <p className="text-sm md:text-lg font-semibold whitespace-nowrap">
+                ₦{(cartQty === 0 ? originalPrice : totalPrice).toLocaleString()}
+              </p>
+            </div>
+
+            {/* Add to Cart, then Minus and Plus */}
             {cartQty === 0 ? (
               <button
                 onClick={() => onAddToCart(product)}
-                className="w-full md:w-auto text-center rounded-full bg-white px-3 md:px-5 py-2 text-black text-xs md:text-sm font-medium hover:bg-amber-300 transition-all duration-300 active:scale-95 whitespace-nowrap"
+                className="w-full md:w-auto text-center whitespace-nowrap rounded-full bg-white px-4 md:px-6 py-2.5 text-xs md:text-sm font-semibold text-black transition-all duration-300 hover:bg-amber-100 active:scale-95"
               >
-                Add to Cart
+                Add To Cart
               </button>
             ) : (
-              <div className="flex w-full items-center justify-between md:w-auto md:justify-start gap-3 rounded-full bg-white px-3 py-2 text-black">
-
+              <div className="flex w-full md:w-auto items-center justify-between gap-3 rounded-full bg-white px-3 py-2 text-black">
                 <button
                   onClick={() => decreaseQty(product)}
-                  className="hover:text-amber-500"
+                  aria-label="Decrease quantity"
+                  className="rounded-full p-1 transition-all hover:text-amber-600 active:scale-75"
                 >
                   <Minus size={16} />
                 </button>
 
-                <span className="text-sm font-semibold">
+                <span className="min-w-[16px] text-center text-sm font-semibold">
                   {cartQty}
                 </span>
 
                 <button
                   onClick={() => increaseQty(product)}
-                  className="hover:text-amber-500"
+                  aria-label="Increase quantity"
+                  className="rounded-full p-1 transition-all hover:text-amber-600 active:scale-75"
                 >
                   <Plus size={16} />
                 </button>
-
               </div>
             )}
-
           </div>
+
+          {/* Order on WhatsApp */}
+          {cartQty > 0 && (
+            <button
+              onClick={handleOrder}
+              className="mt-2 w-full rounded-full border border-white/60 py-2 text-xs md:text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black active:scale-95"
+            >
+              Order
+            </button>
+          )}
         </div>
       </div>
     </div>
